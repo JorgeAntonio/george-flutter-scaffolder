@@ -1,14 +1,20 @@
-# George Flutter Scaffolder
+# George Flutter Architect AI (v2.0)
 
-An AI-powered CLI agent designed to scaffold Flutter projects strictly following the "George Stack" architecture. Built with `@github/copilot-sdk`.
+An AI-powered CLI agent designed to scaffold Flutter projects strictly following the **"George Stack" Clean Architecture**. Built with `@github/copilot-sdk`.
 
-## The "George Stack"
-This tool enforces a specific set of libraries and architectural patterns:
-- **State Management:** `flutter_riverpod`, `riverpod_annotation`
-- **Routing:** `go_router`
-- **Data & Models:** `dio`, `freezed_annotation`
-- **Dev Tools:** `build_runner`, `riverpod_generator`, `freezed`, `json_serializable`
-- **Architecture:** Clean Architecture folder structure.
+## The "George Stack" Architecture
+This tool enforces a strict Clean Architecture pattern:
+- **Structure:** `lib/src/{core, features, shared}`
+- **Core:** `app`, `assets`, `config`, `constants`, `providers`, `routing`, `services`, `theme`
+- **Shared:** `widgets`, `utils`, `extensions`, `presentation`
+- **Features:** Modularized by feature (`data`, `domain`, `presentation`)
+- **Tech Stack:** `flutter_riverpod`, `go_router`, `dio`, `freezed`, `flutter_hooks`
+
+## New in v2.0: Interactive Architect
+The agent now acts as a Lead Architect:
+1.  **Brainstorms** features based on your project idea.
+2.  **Clarifies** requirements (Navigation style, Organization).
+3.  **Generates** a complete scaffold with working routing (Bottom Nav / Drawer) and feature placeholders.
 
 ## Prerequisites
 - Node.js (v18+ recommended)
@@ -47,11 +53,9 @@ node dist/scaffolder.js
 
 ## How it works
 The agent uses the GitHub Copilot SDK to interpret natural language commands.
-Example usage:
-> "Crea un nuevo proyecto llamado my_app"
 
-The agent will:
-1.  Run `flutter create`.
-2.  Add all required dependencies.
-3.  Scaffold the Clean Architecture folder structure.
-4.  Replace `main.dart` with a Riverpod-configured entry point.
+**Example Interaction:**
+> User: "I want to build a crypto wallet app."
+> Agent: "Analyzing... I suggest features like 'Auth', 'Wallet', 'Market'. What navigation style do you prefer? (Bottom Nav / Drawer)"
+> User: "Bottom Nav, please."
+> Agent: *Scaffolds the entire project with configured routing and folders.*
