@@ -1,137 +1,90 @@
-# George Flutter Architect AI (v2.0) - Multi-Agent
+<p align="center">
+  <img src="assets/logo.webp" alt="ForgeStack AI Logo" width="300px">
+</p>
 
-An AI-powered CLI agent designed to scaffold Flutter projects strictly following the **"George Stack" Clean Architecture**. Now supports both **GitHub Copilot** and **Deepseek** AI providers.
+# ForgeStack AI
 
-## The "George Stack" Architecture
-This tool enforces a strict Clean Architecture pattern:
-- **Structure:** `lib/src/{core, features, shared}`
-- **Core:** `app`, `assets`, `config`, `constants`, `providers`, `routing`, `services`, `theme`
-- **Shared:** `widgets`, `utils`, `extensions`, `presentation`
-- **Features:** Modularized by feature (`data`, `domain`, `presentation`)
-- **Tech Stack:** `flutter_riverpod`, `go_router`, `dio`, `freezed`, `flutter_hooks`
+**The Opinionated Flutter Scaffolder at the Speed of Thought.**
 
-## New in v2.0: Multi-Agent Support
-The agent now supports multiple AI providers:
+ForgeStack AI is an AI-driven architect that automates the creation of production-grade Flutter environments. It enforces a strict **Clean Architecture**—ensuring your code remains scalable, testable, and clean from the very first commit.
 
-### 🤖 GitHub Copilot (GPT-4o)
-- Original provider using GitHub Copilot SDK
-- Requires GitHub Token with Copilot access
+---
 
-### 🧠 Deepseek (deepseek-reasoner)
-- Alternative provider using Deepseek's API
-- Optimized prompt for better tool usage
-- Requires Deepseek API Key
+## Why ForgeStack?
 
-## Prerequisites
-- Node.js (v18+ recommended)
-- Flutter SDK installed and available in your PATH.
-- API credentials (see Setup below)
+Most scaffolders give you a folder structure. **ForgeStack gives you a foundation.** It utilizes a dual-engine AI approach to understand your project's intent and wire up the boilerplate specifically for your needs.
 
-## Setup
+### The Production-Ready Standard
 
-1.  Clone the repository.
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
-3.  Create a `.env` file in the root directory with your credentials:
+* **Architecture:** Strict Clean Architecture (`core`, `shared`, `features`).
+* **State Management:** `flutter_riverpod` + `flutter_hooks`.
+* **Navigation:** Type-safe `go_router` with pre-configured paths.
+* **Networking:** `dio` with pre-built interceptors and base configurations.
+* **Data Models:** Immutable classes with `freezed` & `json_serializable`.
 
-### For GitHub Copilot:
-```env
-GITHUB_TOKEN=your_github_token_here
-```
+---
 
-### For Deepseek:
-```env
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-```
+## Dual-Engine Intelligence
 
-### Both providers (optional):
-```env
-GITHUB_TOKEN=your_github_token_here
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-```
+ForgeStack v2.0 allows you to switch between specialized AI providers:
 
-**Get your API keys:**
-- GitHub Token: [GitHub Settings > Developer Settings > Personal Access Tokens](https://github.com/settings/tokens)
-- Deepseek API Key: [Deepseek Platform](https://platform.deepseek.com/)
+| Provider | Engine | Best For |
+| --- | --- | --- |
+| **GitHub Copilot** | GPT-4o | Seamless ecosystem integration and speed. |
+| **Deepseek** | Deepseek-Reasoner | Complex architectural reasoning and precision logic. |
 
-## Usage
+---
 
-### Development Mode
-Run the agent directly with `ts-node`:
+## Quick Start
+
+### 1. Installation & Config
+
 ```bash
+git clone https://github.com/JorgeAntonio/forgestack-AI
+cd forgestack-ai
+npm install
+```
+
+Create a .env file:
+
+```Plaintext
+GITHUB_TOKEN=your_token_here
+DEEPSEEK_API_KEY=your_key_here
+```
+
+### 2. Ignition
+
+```bash
+# Development mode
 npm run dev
+
+# Production build
+npm run build && node dist/index.js
 ```
 
-### Build and Run
-Build the project to JavaScript:
-```bash
-npm run build
-```
-Run the compiled script:
-```bash
-node dist/index.js
-```
+## How it Works
 
-## How it works
+Select Engine: Choose between Copilot or Deepseek.
 
-When you start the CLI, you'll be prompted to select your AI provider:
+Brainstorm: Describe your app (e.g., "A fitness app with progress tracking").
 
-```
-🤖 George's Flutter Architect v2.0 - Multi-Agent
+Forge: The AI clarifies navigation (Bottom Nav / Drawer) and generates the entire scaffold.
 
-Selecciona el agente AI que deseas usar:
-  [1] GitHub Copilot (GPT-4o)
-  [2] Deepseek (deepseek-reasoner)
+💡 Pro Tip: Be specific. Instead of saying "auth", try "email and social auth with Firebase". ForgeStack will generate the feature folders and placeholders accordingly.
 
-Tu elección (1 o 2): 
-```
+## Repository Structure
 
-After selecting, the agent will:
-1. **Brainstorm** features based on your project idea.
-2. **Clarify** requirements (Navigation style, Organization).
-3. **Generate** a complete scaffold with working routing (Bottom Nav / Drawer) and feature placeholders.
-
-**Example Interaction:**
-> User: "I want to build a crypto wallet app."
-> Agent: "Analyzing... I suggest features like 'Auth', 'Wallet', 'Market'. What navigation style do you prefer? (Bottom Nav / Drawer)"
-> User: "Bottom Nav, please."
-> Agent: *Scaffolds the entire project with configured routing and folders.*
-
-## Architecture
-
-The project uses an abstraction layer (`src/providers/`) that allows easy switching between AI providers:
-
-```
+```Plaintext
 src/
-├── providers/
-│   ├── base.ts          # Common interfaces (AIProvider, Tool, AIAgent)
-│   ├── copilot.ts       # GitHub Copilot adapter
-│   └── deepseek.ts      # Deepseek adapter (OpenAI SDK)
-├── tools/
-│   ├── flutterOps.ts    # Tool: Create Flutter projects
-│   └── scaffoldCleanArch.ts  # Tool: Generate Clean Architecture
-└── index.ts             # Entry point with provider selector
+├── providers/     # AI Adapters (Copilot, Deepseek)
+├── tools/         # The "Hands" (Flutter CLI & Scaffolding logic)
+└── index.ts       # Orchestrator
 ```
-
-## Available Tools
-
-### 1. `flutter_ops`
-Creates Flutter projects using the CLI.
-- **Parameters:**
-  - `command`: "create"
-  - `projectName`: Project folder name
-  - `org`: Organization domain (optional, e.g., "com.jorgeantonio")
-
-### 2. `scaffold_clean_arch`
-Generates the complete Clean Architecture structure.
-- **Parameters:**
-  - `projectName`: Project folder name
-  - `features`: Array of feature names (e.g., ["auth", "products"])
-  - `navigationType`: "bottom_nav", "drawer", or "simple"
-  - `bottomNavFeatures`: Features to show as tabs (optional)
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for details.
